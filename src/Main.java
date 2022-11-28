@@ -1,9 +1,8 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Scanner;
-import java.lang.Comparable;
+
 
 
 public class Main {
@@ -23,14 +22,14 @@ public class Main {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        int n = 14;
+
         //Integer.parseInt(reader.nextLine().trim());
 
         DoublyLinkedList ayca = new DoublyLinkedList();
         ArrayList listem = new ArrayList<>();
         ArrayList liste = new ArrayList<>();
 
-        for (int i = 0; i < n; i++) {
+        while (reader.hasNext()) {
             Student stu = null;
             try {
                 stu = new Student();
@@ -71,7 +70,7 @@ public class Main {
                     e.printStackTrace();
                 }
 
-                for (int i = 0; i < n; i++) {
+                for (int i = 0; i < ayca.size(); i++) {
                     Student stu1 = null;
                     try {
                         stu1 = new Student();
@@ -129,6 +128,7 @@ public class Main {
                 System.out.println(ayca.size());
             }
             if(A == 9){
+                ayca.displaySuccessfulStudents();
 
             }
 

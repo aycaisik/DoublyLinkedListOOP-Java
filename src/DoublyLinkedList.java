@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 public class DoublyLinkedList<T extends Comparable> {
     Dnode<T> head;
 
@@ -137,27 +135,36 @@ public class DoublyLinkedList<T extends Comparable> {
 
     }
 
-    public T findMax() {
+    public void findMax() {
         Dnode<T> iterator = head;
+        DoublyLinkedList ayca2 = new DoublyLinkedList();
+        Dnode<T> tempIterator = ayca2.head;
         if (head == null) {
-            return null;
+
         }
-        T max = iterator.value;
-        int size = size();
+        for (int i = 0; i < size(); i++) {
+            T temp = iterator.value;
+            ayca2.addToEnd(temp);
+            iterator = iterator.next;
+        }
+        tempIterator = ayca2.head;
+        T max = tempIterator.value;
         if (max instanceof Student) {
+            int size = ayca2.size();
             for (int i = 0; i < size; i++) {
-                iterator = head;
-                max = iterator.value;
-                while (iterator != null) {
-                    if (iterator.value.compareTo(max) == 1)
-                        max = iterator.value;
-                    iterator = iterator.next;
+                tempIterator = ayca2.head;
+                max = tempIterator.value;
+                while (tempIterator != null) {
+                    if (tempIterator.value.compareTo(max) == 1)
+                        max = tempIterator.value;
+                    tempIterator = tempIterator.next;
                 }
                 System.out.println(max);
-                delete(max);
+                ayca2.delete(max);
             }
+
         }
-        return max;
+
     }
 
     public void findDataMax() {
@@ -231,7 +238,7 @@ public class DoublyLinkedList<T extends Comparable> {
 
         Dnode<T> iterator = head, prev = head;
         Student id2 = (Student) iterator.value;
-        if (id2.getId()== id) {
+        if (id2.getId() == id) {
 
             if (head.value.compareTo(id2) == 0)
                 head = head.next;
@@ -243,15 +250,82 @@ public class DoublyLinkedList<T extends Comparable> {
                 prev.next = iterator.next;
             }
             System.out.println("kişi silindi");
-        }
-        else{
+        } else {
             System.out.println("böyle bir kişi mevcut değil");
         }
 
 
     }
 
+    public void displaySuccessfulStudents() {
+        if (head == null) {
+        } else {
+            T deneme = head.value;
+            if (deneme instanceof Student) {
+                int studentCount = 0;
+                int mathSum = 0;
+                int dataSum = 0;
+                Dnode<T> iterator = head;
+                while (iterator != null) {
+                    Student student = (Student) iterator.value;
+                    mathSum += student.getMathNote();
+                    studentCount++;
+                    iterator = iterator.next;
+                }
+                iterator = head;
+                mathSum = mathSum / studentCount;
+                while (iterator != null) {
+                    Student student = (Student) iterator.value;
+                    dataSum += student.getDataStNote();
+                    iterator = iterator.next;
+                }
+                int count1 = 0;
+                iterator = head;
+                dataSum = dataSum / studentCount;
+                while (iterator != null) {
+                    Student student = (Student) iterator.value;
+                    if (student.getMathNote() > mathSum) {
+                        if (count1 == 0) {
+                            System.out.println("matematiği geçen öğrenciler (Math course avarage) : " + mathSum);
+                            count1++;
+                        }
+                        System.out.println(student.getId() + " " + student.getName() + " " + student.getMathNote() + " " + student.getDataStNote());
+                    }
+                    iterator = iterator.next;
+                }
+                iterator = head;
+                int count2 = 0;
+                while (iterator != null) {
+                    Student student = (Student) iterator.value;
 
+                    if (student.getDataStNote() > dataSum) {
+                        if (count2 == 0) {
+                            count2++;
+                            System.out.println("datayı geçen öğrenciler (Data s. course avarage) : " + dataSum);
+                        }
+                        System.out.println(student.getId() + " " + student.getName() + " " + student.getMathNote() + " " + student.getDataStNote());
+                    }
+                    iterator = iterator.next;
+                }
+                int count3 = 0;
+                iterator = head;
+                while (iterator != null) {
+                    Student student = (Student) iterator.value;
+                    if (student.getDataStNote() > dataSum && student.getMathNote() > mathSum) {
+                        if (count3 == 0) {
+                            System.out.println("tüm derslerden başarılı olan öğrenciler (Data s. course avarage : " + dataSum + (") (Math course avarage : " + mathSum + " )"));
+                            count3++;
+                        }
+                        System.out.println(student.getId() + " " + student.getName() + " " + student.getMathNote() + " " + student.getDataStNote());
+                    }
+                    iterator = iterator.next;
+                }
+
+            }
+        }
+
+
+    }
 }
 
 
